@@ -35,7 +35,7 @@ class Report extends CI_Controller{
 				'amount' => $this->input->post('amount'),
 				'type_of_work' => $this->input->post('type_of_work'),
 				'work_hours' => $this->input->post('work_hours'),
-				'sendtime' => $this->input->post('sendtime'),
+				'sendtime' => date("Y-m-d H:i:s"),
             );
             
             $report_id = $this->Report_model->add_report($params);
@@ -72,7 +72,7 @@ class Report extends CI_Controller{
 					'amount' => $this->input->post('amount'),
 					'type_of_work' => $this->input->post('type_of_work'),
 					'work_hours' => $this->input->post('work_hours'),
-					'sendtime' => $this->input->post('sendtime'),
+					'sendtime' => date("Y-m-d H:i:s"),
                 );
 
                 $this->Report_model->update_report($id,$params);            

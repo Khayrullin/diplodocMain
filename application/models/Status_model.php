@@ -4,7 +4,7 @@
  * www.crudigniter.com
  */
  
-class Statu_model extends CI_Model
+class Status_model extends CI_Model
 {
     function __construct()
     {

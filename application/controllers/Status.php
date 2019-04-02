@@ -8,7 +8,7 @@ class Status extends CI_Controller{
     function __construct()
     {
         parent::__construct();
-        $this->load->model('Statu_model');
+        $this->load->model('Status_model');
     } 
 
     /*

@@ -22,6 +22,17 @@ class Project extends CI_Controller{
         $this->load->view('layouts/main',$data);
     }
 
+    function get_detail($id)
+    {
+        $data['project'] = $this->Project_model->get_project($id);
+
+        $this->load->model('Task_model');
+        $data['task'] = $this->Task_model->get_projects_task($id);
+
+        $data['_view'] = 'project/detail';
+        $this->load->view('layouts/main',$data);
+    }
+
     /*
      * Adding a new project
      */

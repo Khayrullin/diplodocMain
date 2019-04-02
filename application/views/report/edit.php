@@ -57,12 +57,6 @@
 							<input type="text" name="work_hours" value="<?php echo ($this->input->post('work_hours') ? $this->input->post('work_hours') : $report['work_hours']); ?>" class="form-control" id="work_hours" />
 						</div>
 					</div>
-					<div class="col-md-6">
-						<label for="sendtime" class="control-label">Sendtime</label>
-						<div class="form-group">
-							<input type="text" name="sendtime" value="<?php echo ($this->input->post('sendtime') ? $this->input->post('sendtime') : $report['sendtime']); ?>" class="has-datetimepicker form-control" id="sendtime" />
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="box-footer">

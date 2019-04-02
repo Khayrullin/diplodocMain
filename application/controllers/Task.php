@@ -22,13 +22,35 @@ class Task extends CI_Controller{
         $this->load->view('layouts/main',$data);
     }
 
+    function get_detail($id)
+    {
+        $data['task'] = $this->Task_model->get_task($id);
+        $this->load->model('Status_model');
+        $data['status'] = $this->Status_model->get_status($data['task']["status_id"]);
+
+
+
+
+        $this->load->model('Report_model');
+        $data['report'] = $this->Report_model->get_task_reports($id);
+
+
+
+
+
+        $data['_view'] = 'task/detail';
+        $this->load->view('layouts/main',$data);
+    }
+
     /*
      * Adding a new task
      */
     function add()
     {   
         if(isset($_POST) && count($_POST) > 0)     
-        {   
+        {
+            $date = DateTime::createFromFormat('m/d/Y h:i A', $this->input->post('deadline'));
+            $deadline = $date->format('Y-m-d h:i:s');
             $params = array(
 				'project_id' => $this->input->post('project_id'),
 				'status_id' => $this->input->post('status_id'),
@@ -36,7 +58,7 @@ class Task extends CI_Controller{
 				'unit' => $this->input->post('unit'),
 				'name' => $this->input->post('name'),
 				'description' => $this->input->post('description'),
-				'deadline' => $this->input->post('deadline'),
+				'deadline' =>  $deadline,
             );
             
             $task_id = $this->Task_model->add_task($params);
@@ -47,8 +69,8 @@ class Task extends CI_Controller{
 			$this->load->model('Project_model');
 			$data['all_project'] = $this->Project_model->get_all_project();
 
-			$this->load->model('Statu_model');
-			$data['all_status'] = $this->Statu_model->get_all_status();
+			$this->load->model('Status_model');
+			$data['all_status'] = $this->Status_model->get_all_status();
             
             $data['_view'] = 'task/add';
             $this->load->view('layouts/main',$data);
@@ -66,7 +88,9 @@ class Task extends CI_Controller{
         if(isset($data['task']['id']))
         {
             if(isset($_POST) && count($_POST) > 0)     
-            {   
+            {
+                $date = DateTime::createFromFormat('m/d/Y h:i A', $this->input->post('deadline'));
+                $deadline = $date->format('Y-m-d h:i:s');
                 $params = array(
 					'project_id' => $this->input->post('project_id'),
 					'status_id' => $this->input->post('status_id'),
@@ -74,10 +98,9 @@ class Task extends CI_Controller{
 					'unit' => $this->input->post('unit'),
 					'name' => $this->input->post('name'),
 					'description' => $this->input->post('description'),
-					'deadline' => $this->input->post('deadline'),
+					'deadline' => $deadline,
                 );
-
-                $this->Task_model->update_task($id,$params);            
+                $this->Task_model->update_task($id,$params);
                 redirect('task/index');
             }
             else
@@ -85,8 +108,8 @@ class Task extends CI_Controller{
 				$this->load->model('Project_model');
 				$data['all_project'] = $this->Project_model->get_all_project();
 
-				$this->load->model('Statu_model');
-				$data['all_status'] = $this->Statu_model->get_all_status();
+				$this->load->model('Status_model');
+				$data['all_status'] = $this->Status_model->get_all_status();
 
                 $data['_view'] = 'task/edit';
                 $this->load->view('layouts/main',$data);

@@ -45,6 +45,12 @@ class Task_model extends CI_Model
         $this->db->where('id',$id);
         return $this->db->update('Task',$params);
     }
+
+    function get_projects_task($id)
+    {
+        $this->db->where('project_id',$id);
+        return $this->db->get('Task')->result_array();
+    }
     
     /*
      * function to delete task
