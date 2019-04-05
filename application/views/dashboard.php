@@ -55,6 +55,12 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="<?php echo site_url('project/index'); ?>">
+                            <i class="fa fa-clipboard"></i> <span>Project</span>
+                        </a>
+                    </li>
+
 
                 </ul>
             </div>

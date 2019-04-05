@@ -18,6 +18,12 @@ class Project_model extends CI_Model
     {
         return $this->db->get_where('project',array('id'=>$id))->row_array();
     }
+
+    function get_employers_projects($id)
+    {
+        $this->db->where('employer_id',$id);
+        return $this->db->get('project')->result_array();
+    }
         
     /*
      * Get all project

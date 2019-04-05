@@ -29,8 +29,9 @@
 						<td><?php echo $r['work_hours']; ?></td>
 						<td><?php echo $r['sendtime']; ?></td>
 						<td>
-                            <a href="<?php echo site_url('report/edit/'.$r['id']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 
-                            <a href="<?php echo site_url('report/remove/'.$r['id']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                            <a href="<?php echo site_url('report/edit/'.$r['id']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
+                            <a href="<?php echo site_url('report/remove/' . $r['id']); ?>"
+                               class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
                         </td>
                     </tr>
                     <?php } ?>

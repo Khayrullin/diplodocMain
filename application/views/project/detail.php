@@ -11,7 +11,6 @@
                         <th>Задача</th>
                         <th>Дедлайн</th>
                         <th>Текущий статус</th>
-                        <th>Actions</th>
                     </tr>
                     <?php foreach ($task as $T) { ?>
                         <tr>
@@ -22,12 +21,14 @@
 
                             </td>
                             <td><?php echo $T['deadline']; ?></td>
-                            <td><?php echo $T['status_id']; ?></td>
-                            <td>
-                                <a href="<?php echo site_url('task/edit/' . $T['id']); ?>"
-                                   class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
-                                <a href="<?php echo site_url('task/remove/' . $T['id']); ?>"
-                                   class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                            <td><?php
+                                foreach ($status as $s) {
+                                    if ($T['status_id'] == $s['id']) {
+                                        echo $s['name'];
+                                    }
+                                }
+                                ?>
+
                             </td>
                         </tr>
                     <?php } ?>

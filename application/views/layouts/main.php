@@ -100,17 +100,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="<?php echo site_url('project/get_employers_projects'); ?>">
                         <i class="fa fa-clipboard"></i> <span>Project</span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li class="active">
-                            <a href="<?php echo site_url('project/add'); ?>"><i class="fa fa-plus"></i> Add</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo site_url('project/index'); ?>"><i class="fa fa-list-ul"></i> Listing</a>
-                        </li>
-                    </ul>
                 </li>
 
             </ul>

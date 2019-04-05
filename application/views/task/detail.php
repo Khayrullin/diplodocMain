@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Задача "<?php echo $task['name']; ?>"  </h3>
+                <h3 class="box-title">Задача "<?php echo $task['name']; ?>" </h3>
             </div>
             <div class="box-body">
                 <table class="table table-striped">
@@ -29,8 +29,6 @@
                         <td>
                             <a href="<?php echo site_url('task/edit/' . $task['id']); ?>"
                                class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
-                            <a href="<?php echo site_url('task/remove/' . $task['id']); ?>"
-                               class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
                         </td>
                     </tr>
                 </table>
@@ -55,7 +53,7 @@
                         <th>Документы</th>
                         <th>Действия</th>
                     </tr>
-                    <?php foreach($report as $r){ ?>
+                    <?php foreach ($report as $r) { ?>
                         <tr>
                             <td><?php echo $r['type_of_work']; ?></td>
                             <td><?php echo $r['amount']; ?></td>
@@ -67,8 +65,10 @@
                             <td><?php echo $r['sendtime']; ?></td>
                             <td>Документы</td>
                             <td>
-                                <a href="<?php echo site_url('report/edit/'.$r['id']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
-                                <a href="<?php echo site_url('report/remove/'.$r['id']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                                <a href="<?php echo site_url('report/edit/' . $r['id']); ?>"
+                                   class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
+                                <a href="<?php echo site_url('report/remove/' . $r['id']); ?>"
+                                   class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
                             </td>
                         </tr>
                     <?php } ?>
