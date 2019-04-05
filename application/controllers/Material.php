@@ -30,10 +30,11 @@ class Material extends CI_Controller{
         if(isset($_POST) && count($_POST) > 0)     
         {   
             $params = array(
-				'project_id' => $this->input->post('project_id'),
+                'task_id' => $this->input->post('task_id'),
 				'name' => $this->input->post('name'),
 				'unit' => $this->input->post('unit'),
 				'quantity' => $this->input->post('quantity'),
+                'quantity_left' => $this->input->post('quantity_left'),
             );
             
             $material_id = $this->Material_model->add_material($params);
@@ -41,8 +42,8 @@ class Material extends CI_Controller{
         }
         else
         {
-			$this->load->model('Project_model');
-			$data['all_project'] = $this->Project_model->get_all_project();
+            $this->load->model('Task_model');
+            $data['all_task'] = $this->Task_model->get_all_task();
             
             $data['_view'] = 'material/add';
             $this->load->view('layouts/main',$data);
@@ -62,10 +63,11 @@ class Material extends CI_Controller{
             if(isset($_POST) && count($_POST) > 0)     
             {   
                 $params = array(
-					'project_id' => $this->input->post('project_id'),
+                    'task_id' => $this->input->post('task_id'),
 					'name' => $this->input->post('name'),
 					'unit' => $this->input->post('unit'),
 					'quantity' => $this->input->post('quantity'),
+                    'quantity_left' => $this->input->post('quantity_left'),
                 );
 
                 $this->Material_model->update_material($id,$params);            
@@ -73,8 +75,8 @@ class Material extends CI_Controller{
             }
             else
             {
-				$this->load->model('Project_model');
-				$data['all_project'] = $this->Project_model->get_all_project();
+                $this->load->model('Task_model');
+                $data['all_task'] = $this->Task_model->get_all_task();
 
                 $data['_view'] = 'material/edit';
                 $this->load->view('layouts/main',$data);

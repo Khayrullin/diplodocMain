@@ -23,7 +23,7 @@
                                 foreach ($manager as $m) {
                                     if ($p['manager_id'] == $m['id']) {
                                         //TODO Нормальный вывод имени юзера
-                                        echo 'John ' . $m['id'];
+                                        echo '***TODO***' ;
                                     }
                                 }
                                 ?>

@@ -10,17 +10,17 @@
 					<div class="col-md-6">
 						<label for="project_id" class="control-label">Project</label>
 						<div class="form-group">
-							<select name="project_id" class="form-control">
-								<option value="">select project</option>
-								<?php 
-								foreach($all_project as $project)
-								{
-									$selected = ($project['id'] == $material['project_id']) ? ' selected="selected"' : "";
+                            <select name="task_id" class="form-control">
+                                <option value="">select task</option>
+                                <?php
+                                foreach($all_task as $task)
+                                {
+                                    $selected = ($task['id'] == $material['task_id']) ? ' selected="selected"' : "";
 
-									echo '<option value="'.$project['id'].'" '.$selected.'>'.$project['name'].'</option>';
-								} 
-								?>
-							</select>
+                                    echo '<option value="'.$task['id'].'" '.$selected.'>'.$task['id'].'</option>';
+                                }
+                                ?>
+                            </select>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -41,6 +41,12 @@
 							<input type="text" name="quantity" value="<?php echo ($this->input->post('quantity') ? $this->input->post('quantity') : $material['quantity']); ?>" class="form-control" id="quantity" />
 						</div>
 					</div>
+                    <div class="col-md-6">
+                        <label for="quantity_left" class="control-label">Quantity Left</label>
+                        <div class="form-group">
+                            <input type="text" name="quantity_left" value="<?php echo ($this->input->post('quantity_left') ? $this->input->post('quantity_left') : $material['quantity_left']); ?>" class="form-control" id="quantity_left" />
+                        </div>
+                    </div>
 				</div>
 			</div>
 			<div class="box-footer">

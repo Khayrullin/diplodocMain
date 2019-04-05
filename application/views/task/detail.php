@@ -41,6 +41,30 @@
         </div>
         <div class="box">
             <div class="box-header">
+                <h3 class="box-title">Список материалов </h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Название</th>
+                        <th>Ед. Измерения</th>
+                        <th>План</th>
+                        <th>Остаток</th>
+                    </tr>
+                    <?php foreach ($materials as $m) { ?>
+                        <tr>
+                            <td><?php echo $m['name']; ?></td>
+                            <td><?php echo $m['unit']; ?></td>
+                            <td><?php echo $m['quantity']; ?></td>
+                            <td><?php echo $m['quantity_left']; ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
                 <h3 class="box-title">Отчеты по задаче</h3>
             </div>
             <div class="box-body">
@@ -58,7 +82,31 @@
                         <tr>
                             <td><?php echo $r['type_of_work']; ?></td>
                             <td><?php echo $r['amount']; ?></td>
-                            <td></td>
+                            <td>
+                                <table class="table">
+                                    <tr>
+                                        <th>Материал</th>
+                                        <th>Израсходовано</th>
+                                    </tr>
+                                    <?php foreach ($wasted
+
+                                    as $w) { ?>
+                                    <tr>
+                                        <? if ($w['report_id'] == $r['id']) { ?>
+                                            <td><?php
+                                                foreach ($materials as $m) {
+                                                    if ($m['id'] == $w['material_id']) {
+                                                        echo $m['name'];
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $w['amount']; ?></td>
+                                        <? } ?>
+                                        <? } ?>
+                                    </tr>
+                                </table>
+                            </td>
                             <td><?php
                                 foreach ($workers as $w) {
                                     if ($w['id'] == $r['workman_id']) {

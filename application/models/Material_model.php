@@ -27,7 +27,13 @@ class Material_model extends CI_Model
         $this->db->order_by('id', 'desc');
         return $this->db->get('materials')->result_array();
     }
-        
+
+    function get_tasks_materials($task_id)
+    {
+        $this->db->where('task_id',$task_id);
+        return $this->db->get('materials')->result_array();
+    }
+
     /*
      * function to add new material
      */

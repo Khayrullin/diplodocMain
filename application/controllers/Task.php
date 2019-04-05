@@ -32,6 +32,10 @@ class Task extends CI_Controller
         $data['project'] = $this->Project_model->get_project($data['task']["project_id"]);
 
         $this->load->model('Wasted_material_model');
+        $data['wasted'] = $this->Wasted_material_model->get_all_wasted_materials();
+
+        $this->load->model('Material_model');
+        $data['materials'] = $this->Material_model->get_tasks_materials($id);
 
         $this->load->model('Report_model');
         $data['report'] = $this->Report_model->get_task_reports($id);
@@ -138,15 +142,8 @@ class Task extends CI_Controller
                     $deadline = $date->format('Y-m-d h:i:s');
                 }
                 $params = array(
-                    'project_id' => $this->input->post('project_id'),
                     'status_id' => $this->input->post('status_id'),
-                    'quantity' => $this->input->post('quantity'),
-                    'unit' => $this->input->post('unit'),
-                    'name' => $this->input->post('name'),
-                    'description' => $this->input->post('description'),
                     'deadline' => $deadline ? $deadline : $this->input->post('deadline'),
-                    'quantity_done' => $this->input->post('quantity_done'),
-                    'quantity_left' => $this->input->post('quantity_left'),
                 );
                 $this->Task_model->update_task($id, $params);
                 redirect('task/get_detail/' . $id);
