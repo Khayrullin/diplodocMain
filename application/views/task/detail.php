@@ -33,7 +33,7 @@
 
                         <td>
                             <a href="<?php echo site_url('task/edit_by_user/' . $task['id']); ?>"
-                               class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
+                               class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> </a>
                         </td>
                     </tr>
                 </table>
@@ -59,13 +59,20 @@
                             <td><?php echo $r['type_of_work']; ?></td>
                             <td><?php echo $r['amount']; ?></td>
                             <td></td>
-                            <td><?php echo $r['workman_id']; ?></td>
+                            <td><?php
+                                foreach ($workers as $w) {
+                                    if ($w['id'] == $r['workman_id']) {
+                                        echo $w['name'] . " " . $w['last_name'];
+                                    }
+                                }
+                                ?></td>
 
 
                             <td><?php echo $r['work_hours']; ?></td>
                             <td><?php echo $r['sendtime']; ?></td>
                             <td><a href="<?php echo site_url('document/get_documents/' . $r['id']); ?>"
-                                   class="btn btn-info btn-xs" style="background-color: #17a51b; border-color: #158416">Файлы </a></td>
+                                   class="btn btn-info btn-xs" style="background-color: #17a51b; border-color: #158416">Файлы </a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </table>

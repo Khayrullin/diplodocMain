@@ -36,6 +36,9 @@ class Task extends CI_Controller
         $this->load->model('Report_model');
         $data['report'] = $this->Report_model->get_task_reports($id);
 
+        $this->load->model('Workman_model');
+        $data['workers'] = $this->Workman_model->get_all_workman();
+
 
         $data['_view'] = 'task/detail';
         $this->load->view('layouts/main', $data);
