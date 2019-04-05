@@ -73,7 +73,49 @@ class Task extends CI_Controller
     /*
      * Editing a task
      */
+
+
     function edit($id)
+    {
+        // check if the task exists before trying to edit it
+        $data['task'] = $this->Task_model->get_task($id);
+
+        if (isset($data['task']['id'])) {
+            if (isset($_POST) && count($_POST) > 0) {
+                $deadline = null;
+                if ($this->input->post('deadline') != null) {
+                    $date = DateTime::createFromFormat('m/d/Y h:i A', $this->input->post('deadline'));
+                    $deadline = $date->format('Y-m-d h:i:s');
+                }
+                $params = array(
+                    'project_id' => $this->input->post('project_id'),
+                    'status_id' => $this->input->post('status_id'),
+                    'quantity' => $this->input->post('quantity'),
+                    'unit' => $this->input->post('unit'),
+                    'name' => $this->input->post('name'),
+                    'description' => $this->input->post('description'),
+                    'deadline' => $deadline ? $deadline : $this->input->post('deadline'),
+                );
+                $this->Task_model->update_task($id, $params);
+                redirect('task/index');
+            } else {
+                $this->load->model('Project_model');
+                $data['all_project'] = $this->Project_model->get_all_project();
+
+                $this->load->model('Status_model');
+                $data['all_status'] = $this->Status_model->get_all_status();
+
+                $data['_view'] = 'task/edit';
+                $this->load->view('layouts/main', $data);
+            }
+        } else {
+            show_error('The task you are trying to edit does not exist.');
+        }
+    }
+
+
+
+    function edit_by_user($id)
     {
         // check if the task exists before trying to edit it
         $data['task'] = $this->Task_model->get_task($id);

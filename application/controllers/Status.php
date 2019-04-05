@@ -16,7 +16,7 @@ class Status extends CI_Controller{
      */
     function index()
     {
-        $data['status'] = $this->Statu_model->get_all_status();
+        $data['status'] = $this->Status_model->get_all_status();
         
         $data['_view'] = 'status/index';
         $this->load->view('layouts/main',$data);
@@ -33,7 +33,7 @@ class Status extends CI_Controller{
 				'name' => $this->input->post('name'),
             );
             
-            $status_id = $this->Statu_model->add_status($params);
+            $status_id = $this->Status_model->add_status($params);
             redirect('status/index');
         }
         else
@@ -49,7 +49,7 @@ class Status extends CI_Controller{
     function edit($id)
     {   
         // check if the status exists before trying to edit it
-        $data['status'] = $this->Statu_model->get_status($id);
+        $data['status'] = $this->Status_model->get_status($id);
         
         if(isset($data['status']['id']))
         {
@@ -59,7 +59,7 @@ class Status extends CI_Controller{
 					'name' => $this->input->post('name'),
                 );
 
-                $this->Statu_model->update_status($id,$params);            
+                $this->Status_model->update_status($id,$params);            
                 redirect('status/index');
             }
             else
@@ -77,12 +77,12 @@ class Status extends CI_Controller{
      */
     function remove($id)
     {
-        $status = $this->Statu_model->get_status($id);
+        $status = $this->Status_model->get_status($id);
 
         // check if the status exists before trying to delete it
         if(isset($status['id']))
         {
-            $this->Statu_model->delete_status($id);
+            $this->Status_model->delete_status($id);
             redirect('status/index');
         }
         else

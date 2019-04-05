@@ -4,7 +4,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Task Edit</h3>
             </div>
-            <?php echo form_open('task/edit/' . $task['id']); ?>
+            <?php echo form_open('task/edit_by_user/' . $task['id']); ?>
             <div class="box-body">
                 <div class="row clearfix">
                     <div class="col-md-6">

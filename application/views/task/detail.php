@@ -27,7 +27,7 @@
                         <td><?php echo $status['name']; ?></td>
 
                         <td>
-                            <a href="<?php echo site_url('task/edit/' . $task['id']); ?>"
+                            <a href="<?php echo site_url('task/edit_by_user/' . $task['id']); ?>"
                                class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
                         </td>
                     </tr>
@@ -37,9 +37,6 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Отчеты по задаче</h3>
-                <div class="box-tools">
-                    <a href="<?php echo site_url('report/add'); ?>" class="btn btn-success btn-sm">Add</a>
-                </div>
             </div>
             <div class="box-body">
                 <table class="table table-striped">
