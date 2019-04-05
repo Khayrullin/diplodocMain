@@ -46,6 +46,18 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <label for="quantity_done" class="control-label">Quantity Done</label>
+                        <div class="form-group">
+                            <input type="text" name="quantity_done" value="<?php echo ($this->input->post('quantity_done') ? $this->input->post('quantity_done') : $task['quantity_done']); ?>" class="form-control" id="quantity_done" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="quantity_left" class="control-label">Quantity Left</label>
+                        <div class="form-group">
+                            <input type="text" name="quantity_left" value="<?php echo ($this->input->post('quantity_left') ? $this->input->post('quantity_left') : $task['quantity_left']); ?>" class="form-control" id="quantity_left" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <label for="unit" class="control-label">Unit</label>
                         <div class="form-group">
                             <input type="text" name="unit"

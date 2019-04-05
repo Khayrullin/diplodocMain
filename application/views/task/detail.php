@@ -10,7 +10,9 @@
                         <th>Задача</th>
                         <th>Описание</th>
                         <th>Проект</th>
-                        <th>Количество</th>
+                        <th>План работ</th>
+                        <th>Выполнено</th>
+                        <th>Осталось</th>
                         <th>Ед. Измерения</th>
                         <th>Дедлайн</th>
                         <th>Статус</th>
@@ -20,11 +22,14 @@
                     <tr>
                         <td><?php echo $task['name']; ?></td>
                         <td><?php echo $task['description']; ?></td>
-                        <td><?php echo $task['project_id']; ?></td>
+                        <td><?php echo $project['name']; ?></td>
                         <td><?php echo $task['quantity']; ?></td>
+                        <td><?php echo $task['quantity_done']; ?></td>
+                        <td><?php echo $task['quantity_left']; ?></td>
                         <td><?php echo $task['unit']; ?></td>
                         <td><?php echo $task['deadline']; ?></td>
                         <td><?php echo $status['name']; ?></td>
+
 
                         <td>
                             <a href="<?php echo site_url('task/edit_by_user/' . $task['id']); ?>"
@@ -48,25 +53,19 @@
                         <th>Время работы</th>
                         <th>Дата отправки</th>
                         <th>Документы</th>
-                        <th>Действия</th>
                     </tr>
                     <?php foreach ($report as $r) { ?>
                         <tr>
                             <td><?php echo $r['type_of_work']; ?></td>
                             <td><?php echo $r['amount']; ?></td>
-                            <td>-</td>
+                            <td></td>
                             <td><?php echo $r['workman_id']; ?></td>
 
 
                             <td><?php echo $r['work_hours']; ?></td>
                             <td><?php echo $r['sendtime']; ?></td>
-                            <td>Документы</td>
-                            <td>
-                                <a href="<?php echo site_url('report/edit/' . $r['id']); ?>"
-                                   class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a>
-                                <a href="<?php echo site_url('report/remove/' . $r['id']); ?>"
-                                   class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
-                            </td>
+                            <td><a href="<?php echo site_url('document/get_documents/' . $r['id']); ?>"
+                                   class="btn btn-info btn-xs" style="background-color: #17a51b; border-color: #158416">Файлы </a></td>
                         </tr>
                     <?php } ?>
                 </table>

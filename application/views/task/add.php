@@ -69,6 +69,18 @@
 							<input type="text" name="deadline" value="<?php echo $this->input->post('deadline'); ?>" class="has-datetimepicker form-control" id="deadline" />
 						</div>
 					</div>
+                    <div class="col-md-6">
+                        <label for="quantity_done" class="control-label">Quantity Done</label>
+                        <div class="form-group">
+                            <input type="text" name="quantity_done" value="<?php echo $this->input->post('quantity_done'); ?>" class="form-control" id="quantity_done" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="quantity_left" class="control-label">Quantity Left</label>
+                        <div class="form-group">
+                            <input type="text" name="quantity_left" value="<?php echo $this->input->post('quantity_left'); ?>" class="form-control" id="quantity_left" />
+                        </div>
+                    </div>
 				</div>
 			</div>
           	<div class="box-footer">

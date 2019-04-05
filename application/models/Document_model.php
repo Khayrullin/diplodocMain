@@ -27,6 +27,12 @@ class Document_model extends CI_Model
         $this->db->order_by('id', 'desc');
         return $this->db->get('documents')->result_array();
     }
+
+    function get_documents($report_id)
+    {
+        $this->db->where('report_id',$report_id);
+        return $this->db->get('documents')->result_array();
+    }
         
     /*
      * function to add new document

@@ -28,7 +28,10 @@ class Task extends CI_Controller
         $data['task'] = $this->Task_model->get_task($id);
         $this->load->model('Status_model');
         $data['status'] = $this->Status_model->get_status($data['task']["status_id"]);
+        $this->load->model('Project_model');
+        $data['project'] = $this->Project_model->get_project($data['task']["project_id"]);
 
+        $this->load->model('Wasted_material_model');
 
         $this->load->model('Report_model');
         $data['report'] = $this->Report_model->get_task_reports($id);
@@ -54,6 +57,8 @@ class Task extends CI_Controller
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
                 'deadline' => $deadline,
+                'quantity_done' => $this->input->post('quantity_done'),
+                'quantity_left' => $this->input->post('quantity_left'),
             );
 
             $task_id = $this->Task_model->add_task($params);
@@ -95,6 +100,8 @@ class Task extends CI_Controller
                     'name' => $this->input->post('name'),
                     'description' => $this->input->post('description'),
                     'deadline' => $deadline ? $deadline : $this->input->post('deadline'),
+                    'quantity_done' => $this->input->post('quantity_done'),
+                    'quantity_left' => $this->input->post('quantity_left'),
                 );
                 $this->Task_model->update_task($id, $params);
                 redirect('task/index');
@@ -135,6 +142,8 @@ class Task extends CI_Controller
                     'name' => $this->input->post('name'),
                     'description' => $this->input->post('description'),
                     'deadline' => $deadline ? $deadline : $this->input->post('deadline'),
+                    'quantity_done' => $this->input->post('quantity_done'),
+                    'quantity_left' => $this->input->post('quantity_left'),
                 );
                 $this->Task_model->update_task($id, $params);
                 redirect('task/get_detail/' . $id);

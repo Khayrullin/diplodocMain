@@ -14,6 +14,8 @@
 						<th>Project Id</th>
 						<th>Status Id</th>
 						<th>Quantity</th>
+                        <th>Quantity Done</th>
+                        <th>Quantity Left</th>
 						<th>Unit</th>
 						<th>Name</th>
 						<th>Description</th>
@@ -26,6 +28,8 @@
 						<td><?php echo $T['project_id']; ?></td>
 						<td><?php echo $T['status_id']; ?></td>
 						<td><?php echo $T['quantity']; ?></td>
+                        <td><?php echo $T['quantity_done']; ?></td>
+                        <td><?php echo $T['quantity_left']; ?></td>
 						<td><?php echo $T['unit']; ?></td>
 						<td><?php echo $T['name']; ?></td>
 						<td><?php echo $T['description']; ?></td>
