@@ -99,7 +99,7 @@ class Authentication extends REST_Controller {
         }
     }
 
-    public function user_get($id = 0) {
+    public function user_get($id = 1) {
         // Returns all the users data if the id not specified,
         // Otherwise, a single user will be returned.
         $con = $id?array('id' => $id):'';

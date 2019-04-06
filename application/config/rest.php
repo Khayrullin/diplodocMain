@@ -101,7 +101,7 @@ $config['rest_realm'] = 'CodexWorld REST API';
 |           authorization key
 |
 */
-$config['rest_auth'] = 'basic';
+$config['rest_auth'] = 'digest';
 /*
 |--------------------------------------------------------------------------
 | REST Login Source
