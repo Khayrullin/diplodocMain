@@ -24,9 +24,9 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <? $username = false;
-    if( array_key_exists ('first_name',$this->session->userdata)) {
+    if (array_key_exists('first_name', $this->session->userdata)) {
         $username = $this->session->userdata['first_name'] . " " . $this->session->userdata['last_name'];
-    }?>
+    } ?>
     <header class="main-header">
         <!-- Logo -->
         <a href="" class="logo">
@@ -52,7 +52,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="<?php echo site_url('resources/img/user2-160x160.jpg'); ?>" class="user-image"
                                  alt="User Image">
-                            <span class="hidden-xs"> <? echo $username? $username : 'Anonimous'?></span>
+                            <span class="hidden-xs"> <? echo $username ? $username : 'Anonimous' ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -61,17 +61,17 @@
                                      alt="User Image">
 
                                 <p>
-                                    <? echo $username? $username : 'Anonimous'?>
-                                    <small>Member since Sep. 2015</small>
+                                    <? echo $username ? $username : 'Anonimous' ?>
+                                    <small>Авторизован</small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="<? echo base_url().'auth/profile'?>" class="btn btn-default btn-flat">Профиль</a>
+                                    <a href="<? echo base_url() . 'auth/profile' ?>" class="btn btn-default btn-flat">Профиль</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="<? echo base_url().'auth/logout'?>" class="btn btn-default btn-flat">Выйти</a>
+                                    <a href="<? echo base_url() . 'auth/logout' ?>" class="btn btn-default btn-flat">Выйти</a>
                                 </div>
                             </li>
                         </ul>
@@ -91,23 +91,29 @@
                          alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p><? echo $username ? $username : 'Anonimous'?></p>
+                    <p><? echo $username ? $username : 'Anonimous' ?></p>
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">MAIN NAVIGATION</li>
-                <li>
-                    <a href="<?php echo site_url(); ?>">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo site_url('project/get_employers_projects'); ?>">
-                        <i class="fa fa-clipboard"></i> <span>Project</span>
-                    </a>
-                </li>
+                <li class="header">Навигация</li>
+                <?php if ($this->session->userdata['user_id'] == '1') : ?>
+
+
+                    <li>
+                        <a href="<?php echo site_url(); ?>">
+                            <i class="fa fa-dashboard"></i> <span>Администрирование</span>
+                        </a>
+                    </li>
+
+                <?php else : ?>
+                    <li>
+                        <a href="<?php echo site_url('project/get_employers_projects'); ?>">
+                            <i class="fa fa-clipboard"></i> <span>Проекты</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
             </ul>
         </section>

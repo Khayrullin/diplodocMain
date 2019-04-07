@@ -37,15 +37,22 @@ class Auth extends CI_Controller
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
-            $group = 'workers';
-            if ($this->ion_auth->in_group($group)) {
-                redirect('rest');
+            if ($this->ion_auth->is_admin()) // remove this elseif if you want to enable this for non-admins
+            {
+                redirect('dashboard');
+
             } else {
 
-                redirect('dashboard');
+                $group = 'workers';
+                if ($this->ion_auth->in_group($group)) {
+                    redirect('rest');
+                }
+                $group = 'employer';
+                if ($this->ion_auth->in_group($group)) {
+                    redirect('project/get_employers_projects');
+                }
             }
         }
-
     }
 
     public function profile()

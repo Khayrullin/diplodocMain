@@ -17,9 +17,9 @@ class Project extends CI_Controller
      */
     function index()
     {
-        if (!$this->ion_auth->logged_in()) {
+        if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $data['project'] = $this->Project_model->get_all_project();
