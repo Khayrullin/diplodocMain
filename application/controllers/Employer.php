@@ -19,7 +19,7 @@ class Employer extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $data['employer'] = $this->Employer_model->get_all_employer();
@@ -36,7 +36,7 @@ class Employer extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             if (isset($_POST) && count($_POST) > 0) {
@@ -60,7 +60,7 @@ class Employer extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             // check if the employer exists before trying to edit it
@@ -91,7 +91,7 @@ class Employer extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $employer = $this->Employer_model->get_employer($id);

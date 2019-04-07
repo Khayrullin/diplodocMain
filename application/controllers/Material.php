@@ -19,7 +19,7 @@ class Material extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $data['materials'] = $this->Material_model->get_all_materials();
@@ -36,7 +36,7 @@ class Material extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             if (isset($_POST) && count($_POST) > 0) {

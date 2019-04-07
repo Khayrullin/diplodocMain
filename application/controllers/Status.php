@@ -18,7 +18,7 @@ class Status extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $data['status'] = $this->Status_model->get_all_status();
@@ -35,7 +35,7 @@ class Status extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             if (isset($_POST) && count($_POST) > 0) {
@@ -59,7 +59,7 @@ class Status extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             // check if the status exists before trying to edit it
@@ -90,7 +90,7 @@ class Status extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $status = $this->Status_model->get_status($id);

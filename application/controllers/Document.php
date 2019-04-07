@@ -19,7 +19,7 @@ class Document extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $data['documents'] = $this->Document_model->get_all_documents();
@@ -49,7 +49,7 @@ class Document extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             if (isset($_POST) && count($_POST) > 0) {
@@ -78,7 +78,7 @@ class Document extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             // check if the document exists before trying to edit it
@@ -114,7 +114,7 @@ class Document extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $document = $this->Document_model->get_document($id);

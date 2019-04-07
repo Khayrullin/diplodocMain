@@ -19,7 +19,7 @@ class Manager extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $data['manager'] = $this->Manager_model->get_all_manager();
@@ -36,7 +36,7 @@ class Manager extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             if (isset($_POST) && count($_POST) > 0) {
@@ -60,7 +60,7 @@ class Manager extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             // check if the manager exists before trying to edit it
@@ -91,7 +91,7 @@ class Manager extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $manager = $this->Manager_model->get_manager($id);

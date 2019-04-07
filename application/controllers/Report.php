@@ -19,7 +19,7 @@ class Report extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             $data['report'] = $this->Report_model->get_all_report();
 
@@ -35,7 +35,7 @@ class Report extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             if (isset($_POST) && count($_POST) > 0) {
@@ -70,7 +70,7 @@ class Report extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             // check if the report exists before trying to edit it
@@ -112,7 +112,7 @@ class Report extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
 
             $report = $this->Report_model->get_report($id);

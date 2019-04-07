@@ -1,15 +1,13 @@
-<h1>Employer profile</h1>
-
-<div id="infoMessage"><?php echo $message;?></div>
+<h1>Профиль</h1>
 
 <table cellpadding=0 cellspacing=10>
 	<tr>
-		<th><?php echo lang('index_fname_th');?></th>
-		<th><?php echo lang('index_lname_th');?></th>
-		<th><?php echo lang('index_email_th');?></th>
-		<th><?php echo lang('index_groups_th');?></th>
-		<th><?php echo lang('index_status_th');?></th>
-		<th><?php echo lang('index_action_th');?></th>
+		<th>Имя</th>
+		<th>Фамилия</th>
+		<th>E-mail</th>
+		<th>Группы</th>
+		<th>Статус</th>
+		<th>Действия</th>
 	</tr>
 	<?php foreach ($user as $usr):?>
 		<tr>

@@ -18,7 +18,7 @@ class Wasted_material extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             $data['wasted_materials'] = $this->Wasted_material_model->get_all_wasted_materials();
 
@@ -34,7 +34,7 @@ class Wasted_material extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
         if(isset($_POST) && count($_POST) > 0)     
         {   
@@ -67,7 +67,7 @@ class Wasted_material extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
         // check if the wasted_material exists before trying to edit it
         $data['wasted_material'] = $this->Wasted_material_model->get_wasted_material($id);
@@ -108,7 +108,7 @@ class Wasted_material extends CI_Controller{
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             $wasted_material = $this->Wasted_material_model->get_wasted_material($id);
 

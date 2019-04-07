@@ -19,7 +19,7 @@ class Workman extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             $params['limit'] = RECORDS_PER_PAGE;
             $params['offset'] = ($this->input->get('per_page')) ? $this->input->get('per_page') : 0;
@@ -43,7 +43,7 @@ class Workman extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             if (isset($_POST) && count($_POST) > 0) {
                 $params = array(
@@ -69,7 +69,7 @@ class Workman extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             // check if the workman exists before trying to edit it
             $data['workman'] = $this->Workman_model->get_workman($id);
@@ -102,7 +102,7 @@ class Workman extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             $workman = $this->Workman_model->get_workman($id);
 

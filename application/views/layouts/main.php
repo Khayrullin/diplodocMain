@@ -68,7 +68,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="<? echo base_url().'auth/profile'?>" class="btn btn-default btn-flat">Профиль</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="<? echo base_url().'auth/logout'?>" class="btn btn-default btn-flat">Выйти</a>

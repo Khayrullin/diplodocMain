@@ -19,7 +19,7 @@ class Task extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             $data['task'] = $this->Task_model->get_all_task();
 
@@ -65,7 +65,7 @@ class Task extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             if (isset($_POST) && count($_POST) > 0) {
                 $date = DateTime::createFromFormat('m/d/Y h:i A', $this->input->post('deadline'));
@@ -106,7 +106,7 @@ class Task extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             // check if the task exists before trying to edit it
             $data['task'] = $this->Task_model->get_task($id);
@@ -193,7 +193,7 @@ class Task extends CI_Controller
     {
         if (!$this->ion_auth->is_admin()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('/', 'refresh');
         } else {
             $task = $this->Task_model->get_task($id);
 

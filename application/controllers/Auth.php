@@ -37,6 +37,23 @@ class Auth extends CI_Controller
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
+            $group = 'workers';
+            if ($this->ion_auth->in_group($group)) {
+                redirect('rest');
+            } else {
+
+                redirect('dashboard');
+            }
+        }
+
+    }
+
+    public function profile()
+    {
+        if (!$this->ion_auth->logged_in()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
             if ($this->ion_auth->is_admin()) // remove this elseif if you want to enable this for non-admins
             {
                 //list the users
@@ -50,30 +67,21 @@ class Auth extends CI_Controller
                 }
                 $this->_render_page('auth' . DIRECTORY_SEPARATOR . 'index', $this->data);
             } else {
+                //list the users
+                $this->data['user'] = $this->ion_auth->user()->result();
 
-                $group = 'workers';
-                if ($this->ion_auth->in_group($group))
-                {
-                    redirect('rest');
+                //USAGE NOTE - you can do more complicated queries like this
+                //$this->data['users'] = $this->ion_auth->where('field', 'value')->users()->result();
+
+                foreach ($this->data['user'] as $k => $user) {
+                    $this->data['user'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
                 }
-                $group = 'employer';
-                if ($this->ion_auth->in_group($group))
-                {
-
-                    //list the users
-                    $this->data['user'] = $this->ion_auth->user()->result();
-
-                    //USAGE NOTE - you can do more complicated queries like this
-                    //$this->data['users'] = $this->ion_auth->where('field', 'value')->users()->result();
-
-                    foreach ($this->data['user'] as $k => $user) {
-                        $this->data['user'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-                    }
-                    $this->_render_page('main' . DIRECTORY_SEPARATOR . 'index', $this->data);
-                }
+                $this->_render_page('main' . DIRECTORY_SEPARATOR . 'index', $this->data);
             }
         }
+
     }
+
 
     /**
      * Log the user in
