@@ -60,7 +60,7 @@ $autoload['packages'] = array();
 
 ion_auth
 */
-$autoload['libraries'] = array('database','ion_auth', 'pagination', 'session');
+$autoload['libraries'] = array('database','ion_auth', 'pagination');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Drivers

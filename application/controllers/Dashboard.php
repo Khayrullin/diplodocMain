@@ -16,14 +16,11 @@ class Dashboard extends CI_Controller
     {
 
 
-        if (!$this->ion_auth->logged_in()) {
-            // redirect them to the login page
-            redirect('auth/login', 'refresh');
-        } else {
+
 
             $data['_view'] = 'dashboard';
             $this->load->view('layouts/main', $data);
-        }
+
 
 
     }

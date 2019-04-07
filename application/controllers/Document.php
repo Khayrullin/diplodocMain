@@ -4,7 +4,8 @@
  * www.crudigniter.com
  */
 
-class Document extends CI_Controller{
+class Document extends CI_Controller
+{
     function __construct()
     {
         parent::__construct();
@@ -16,19 +17,29 @@ class Document extends CI_Controller{
      */
     function index()
     {
-        $data['documents'] = $this->Document_model->get_all_documents();
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
 
-        $data['_view'] = 'document/index';
-        $this->load->view('layouts/main',$data);
+            $data['documents'] = $this->Document_model->get_all_documents();
+            $data['_view'] = 'document/index';
+            $this->load->view('layouts/main', $data);
+        }
     }
 
     function get_documents($id)
     {
-        $data['documents'] = $this->Document_model->get_documents($id);
-        $this->load->model('Report_model');
-        $data['report'] = $this->Report_model->get_report($id);
-        $data['_view'] = 'document/documents';
-        $this->load->view('layouts/main',$data);
+        if (!$this->ion_auth->logged_in()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
+            $data['documents'] = $this->Document_model->get_documents($id);
+            $this->load->model('Report_model');
+            $data['report'] = $this->Report_model->get_report($id);
+            $data['_view'] = 'document/documents';
+            $this->load->view('layouts/main', $data);
+        }
     }
 
     /*
@@ -36,24 +47,27 @@ class Document extends CI_Controller{
      */
     function add()
     {
-        if(isset($_POST) && count($_POST) > 0)
-        {
-            $params = array(
-				'report_id' => $this->input->post('report_id'),
-				'name' => $this->input->post('name'),
-				'data' => $this->input->post('data'),
-            );
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
 
-            $document_id = $this->Document_model->add_document($params);
-            redirect('document/index');
-        }
-        else
-        {
-			$this->load->model('Report_model');
-			$data['all_report'] = $this->Report_model->get_all_report();
+            if (isset($_POST) && count($_POST) > 0) {
+                $params = array(
+                    'report_id' => $this->input->post('report_id'),
+                    'name' => $this->input->post('name'),
+                    'data' => $this->input->post('data'),
+                );
 
-            $data['_view'] = 'document/add';
-            $this->load->view('layouts/main',$data);
+                $document_id = $this->Document_model->add_document($params);
+                redirect('document/index');
+            } else {
+                $this->load->model('Report_model');
+                $data['all_report'] = $this->Report_model->get_all_report();
+
+                $data['_view'] = 'document/add';
+                $this->load->view('layouts/main', $data);
+            }
         }
     }
 
@@ -62,33 +76,35 @@ class Document extends CI_Controller{
      */
     function edit($id)
     {
-        // check if the document exists before trying to edit it
-        $data['document'] = $this->Document_model->get_document($id);
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
 
-        if(isset($data['document']['id']))
-        {
-            if(isset($_POST) && count($_POST) > 0)
-            {
-                $params = array(
-					'report_id' => $this->input->post('report_id'),
-					'name' => $this->input->post('name'),
-					'data' => $this->input->post('data'),
-                );
+            // check if the document exists before trying to edit it
+            $data['document'] = $this->Document_model->get_document($id);
 
-                $this->Document_model->update_document($id,$params);
-                redirect('document/index');
-            }
-            else
-            {
-				$this->load->model('Report_model');
-				$data['all_report'] = $this->Report_model->get_all_report();
+            if (isset($data['document']['id'])) {
+                if (isset($_POST) && count($_POST) > 0) {
+                    $params = array(
+                        'report_id' => $this->input->post('report_id'),
+                        'name' => $this->input->post('name'),
+                        'data' => $this->input->post('data'),
+                    );
 
-                $data['_view'] = 'document/edit';
-                $this->load->view('layouts/main',$data);
+                    $this->Document_model->update_document($id, $params);
+                    redirect('document/index');
+                } else {
+                    $this->load->model('Report_model');
+                    $data['all_report'] = $this->Report_model->get_all_report();
+
+                    $data['_view'] = 'document/edit';
+                    $this->load->view('layouts/main', $data);
+                }
+            } else {
+                show_error('The document you are trying to edit does not exist.');
             }
         }
-        else
-            show_error('The document you are trying to edit does not exist.');
     }
 
     /*
@@ -96,16 +112,21 @@ class Document extends CI_Controller{
      */
     function remove($id)
     {
-        $document = $this->Document_model->get_document($id);
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
 
-        // check if the document exists before trying to delete it
-        if(isset($document['id']))
-        {
-            $this->Document_model->delete_document($id);
-            redirect('document/index');
+            $document = $this->Document_model->get_document($id);
+
+            // check if the document exists before trying to delete it
+            if (isset($document['id'])) {
+                $this->Document_model->delete_document($id);
+                redirect('document/index');
+            } else {
+                show_error('The document you are trying to delete does not exist.');
+            }
         }
-        else
-            show_error('The document you are trying to delete does not exist.');
     }
 
 }

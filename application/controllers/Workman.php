@@ -4,103 +4,115 @@
  * www.crudigniter.com
  */
  
-class Workman extends CI_Controller{
+class Workman extends CI_Controller
+{
     function __construct()
     {
         parent::__construct();
         $this->load->model('Workman_model');
-    } 
+    }
 
     /*
      * Listing of workman
      */
     function index()
     {
-        $params['limit'] = RECORDS_PER_PAGE; 
-        $params['offset'] = ($this->input->get('per_page')) ? $this->input->get('per_page') : 0;
-        
-        $config = $this->config->item('pagination');
-        $config['base_url'] = site_url('workman/index?');
-        $config['total_rows'] = $this->Workman_model->get_all_workman_count();
-        $this->pagination->initialize($config);
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
+            $params['limit'] = RECORDS_PER_PAGE;
+            $params['offset'] = ($this->input->get('per_page')) ? $this->input->get('per_page') : 0;
 
-        $data['workman'] = $this->Workman_model->get_all_workman($params);
-        
-        $data['_view'] = 'workman/index';
-        $this->load->view('layouts/main',$data);
+            $config = $this->config->item('pagination');
+            $config['base_url'] = site_url('workman/index?');
+            $config['total_rows'] = $this->Workman_model->get_all_workman_count();
+            $this->pagination->initialize($config);
+
+            $data['workman'] = $this->Workman_model->get_all_workman($params);
+
+            $data['_view'] = 'workman/index';
+            $this->load->view('layouts/main', $data);
+        }
     }
 
     /*
      * Adding a new workman
      */
     function add()
-    {   
-        if(isset($_POST) && count($_POST) > 0)     
-        {   
-            $params = array(
-				'name' => $this->input->post('name'),
-				'last_name' => $this->input->post('last_name'),
-				'salary_per_hour' => $this->input->post('salary_per_hour'),
-				'unpaid_hours' => $this->input->post('unpaid_hours'),
-            );
-            
-            $workman_id = $this->Workman_model->add_workman($params);
-            redirect('workman/index');
+    {
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
+            if (isset($_POST) && count($_POST) > 0) {
+                $params = array(
+                    'name' => $this->input->post('name'),
+                    'last_name' => $this->input->post('last_name'),
+                    'salary_per_hour' => $this->input->post('salary_per_hour'),
+                    'unpaid_hours' => $this->input->post('unpaid_hours'),
+                );
+
+                $workman_id = $this->Workman_model->add_workman($params);
+                redirect('workman/index');
+            } else {
+                $data['_view'] = 'workman/add';
+                $this->load->view('layouts/main', $data);
+            }
         }
-        else
-        {            
-            $data['_view'] = 'workman/add';
-            $this->load->view('layouts/main',$data);
-        }
-    }  
+    }
 
     /*
      * Editing a workman
      */
     function edit($id)
-    {   
-        // check if the workman exists before trying to edit it
-        $data['workman'] = $this->Workman_model->get_workman($id);
-        
-        if(isset($data['workman']['id']))
-        {
-            if(isset($_POST) && count($_POST) > 0)     
-            {   
-                $params = array(
-					'name' => $this->input->post('name'),
-					'last_name' => $this->input->post('last_name'),
-					'salary_per_hour' => $this->input->post('salary_per_hour'),
-					'unpaid_hours' => $this->input->post('unpaid_hours'),
-                );
+    {
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
+            // check if the workman exists before trying to edit it
+            $data['workman'] = $this->Workman_model->get_workman($id);
 
-                $this->Workman_model->update_workman($id,$params);            
-                redirect('workman/index');
-            }
-            else
-            {
-                $data['_view'] = 'workman/edit';
-                $this->load->view('layouts/main',$data);
+            if (isset($data['workman']['id'])) {
+                if (isset($_POST) && count($_POST) > 0) {
+                    $params = array(
+                        'name' => $this->input->post('name'),
+                        'last_name' => $this->input->post('last_name'),
+                        'salary_per_hour' => $this->input->post('salary_per_hour'),
+                        'unpaid_hours' => $this->input->post('unpaid_hours'),
+                    );
+
+                    $this->Workman_model->update_workman($id, $params);
+                    redirect('workman/index');
+                } else {
+                    $data['_view'] = 'workman/edit';
+                    $this->load->view('layouts/main', $data);
+                }
+            } else {
+                show_error('The workman you are trying to edit does not exist.');
             }
         }
-        else
-            show_error('The workman you are trying to edit does not exist.');
-    } 
+    }
 
     /*
      * Deleting workman
      */
     function remove($id)
     {
-        $workman = $this->Workman_model->get_workman($id);
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
+            $workman = $this->Workman_model->get_workman($id);
 
-        // check if the workman exists before trying to delete it
-        if(isset($workman['id']))
-        {
-            $this->Workman_model->delete_workman($id);
-            redirect('workman/index');
+            // check if the workman exists before trying to delete it
+            if (isset($workman['id'])) {
+                $this->Workman_model->delete_workman($id);
+                redirect('workman/index');
+            } else {
+                show_error('The workman you are trying to delete does not exist.');
+            }
         }
-        else
-            show_error('The workman you are trying to delete does not exist.');
     }
-    
 }

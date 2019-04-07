@@ -42,17 +42,23 @@ class Auth extends CI_Controller
                 //list the users
                 $this->data['users'] = $this->ion_auth->users()->result();
 
+                //USAGE NOTE - you can do more complicated queries like this
+                //$this->data['users'] = $this->ion_auth->where('field', 'value')->users()->result();
+
                 foreach ($this->data['users'] as $k => $user) {
                     $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
                 }
                 $this->_render_page('auth' . DIRECTORY_SEPARATOR . 'index', $this->data);
             } else {
+
                 $group = 'workers';
-                if ($this->ion_auth->in_group($group)) {
+                if ($this->ion_auth->in_group($group))
+                {
                     redirect('rest');
                 }
                 $group = 'employer';
-                if ($this->ion_auth->in_group($group)) {
+                if ($this->ion_auth->in_group($group))
+                {
 
                     //list the users
                     $this->data['user'] = $this->ion_auth->user()->result();

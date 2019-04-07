@@ -16,17 +16,26 @@ class Wasted_material extends CI_Controller{
      */
     function index()
     {
-        $data['wasted_materials'] = $this->Wasted_material_model->get_all_wasted_materials();
-        
-        $data['_view'] = 'wasted_material/index';
-        $this->load->view('layouts/main',$data);
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
+            $data['wasted_materials'] = $this->Wasted_material_model->get_all_wasted_materials();
+
+            $data['_view'] = 'wasted_material/index';
+            $this->load->view('layouts/main', $data);
+        }
     }
 
     /*
      * Adding a new wasted_material
      */
     function add()
-    {   
+    {
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
         if(isset($_POST) && count($_POST) > 0)     
         {   
             $params = array(
@@ -48,14 +57,18 @@ class Wasted_material extends CI_Controller{
             
             $data['_view'] = 'wasted_material/add';
             $this->load->view('layouts/main',$data);
-        }
+        }}
     }  
 
     /*
      * Editing a wasted_material
      */
     function edit($id)
-    {   
+    {
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
         // check if the wasted_material exists before trying to edit it
         $data['wasted_material'] = $this->Wasted_material_model->get_wasted_material($id);
         
@@ -86,23 +99,27 @@ class Wasted_material extends CI_Controller{
         }
         else
             show_error('The wasted_material you are trying to edit does not exist.');
-    } 
+    } }
 
     /*
      * Deleting wasted_material
      */
     function remove($id)
     {
-        $wasted_material = $this->Wasted_material_model->get_wasted_material($id);
+        if (!$this->ion_auth->is_admin()) {
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } else {
+            $wasted_material = $this->Wasted_material_model->get_wasted_material($id);
 
-        // check if the wasted_material exists before trying to delete it
-        if(isset($wasted_material['id']))
-        {
-            $this->Wasted_material_model->delete_wasted_material($id);
-            redirect('wasted_material/index');
+            // check if the wasted_material exists before trying to delete it
+            if (isset($wasted_material['id'])) {
+                $this->Wasted_material_model->delete_wasted_material($id);
+                redirect('wasted_material/index');
+            } else {
+                show_error('The wasted_material you are trying to delete does not exist.');
+            }
         }
-        else
-            show_error('The wasted_material you are trying to delete does not exist.');
     }
     
 }
