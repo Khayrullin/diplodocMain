@@ -101,7 +101,7 @@ $config['rest_realm'] = 'CodexWorld REST API';
 |           authorization key
 |
 */
-$config['rest_auth'] = 'digest';
+$config['rest_auth'] = 'session';
 /*
 |--------------------------------------------------------------------------
 | REST Login Source
@@ -116,7 +116,7 @@ $config['rest_auth'] = 'digest';
 | Note: If 'rest_auth' is set to 'session' then change 'auth_source' to the name of the session variable
 |
 */
-$config['auth_source'] = '';
+$config['auth_source'] = 'id';
 /*
 |--------------------------------------------------------------------------
 | Allow Authentication and API Keys
@@ -126,8 +126,8 @@ $config['auth_source'] = '';
 | requests etc), set to TRUE;
 |
 */
-$config['allow_auth_and_keys'] = TRUE;
-$config['strict_api_and_auth'] = TRUE; // force the use of both api and auth before a valid api request is made
+$config['allow_auth_and_keys'] =FALSE;
+$config['strict_api_and_auth'] = FALSE; // force the use of both api and auth before a valid api request is made
 /*
 |--------------------------------------------------------------------------
 | REST Login Class and Function
@@ -298,7 +298,7 @@ $config['rest_keys_table'] = 'keys';
 |   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_keys'] = TRUE;
+$config['rest_enable_keys'] = FALSE;
 /*
 |--------------------------------------------------------------------------
 | REST Table Key Column Name

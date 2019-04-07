@@ -57,8 +57,10 @@ $autoload['packages'] = array();
 | in the controller:
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
+
+ion_auth
 */
-$autoload['libraries'] = array('database', 'pagination',);
+$autoload['libraries'] = array('database','ion_auth', 'pagination', 'session');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Drivers
@@ -131,4 +133,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = array('document_model');

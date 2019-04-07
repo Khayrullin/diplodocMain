@@ -23,6 +23,10 @@
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
+    <? $username = false;
+    if( array_key_exists ('first_name',$this->session->userdata)) {
+        $username = $this->session->userdata['first_name'] . " " . $this->session->userdata['last_name'];
+    }?>
     <header class="main-header">
         <!-- Logo -->
         <a href="" class="logo">
@@ -48,7 +52,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="<?php echo site_url('resources/img/user2-160x160.jpg'); ?>" class="user-image"
                                  alt="User Image">
-                            <span class="hidden-xs">Bulat Khairullin</span>
+                            <span class="hidden-xs"> <? echo $username? $username : 'Anonimous'?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -57,7 +61,7 @@
                                      alt="User Image">
 
                                 <p>
-                                    Bulat Khairullin - Web Developer
+                                    <? echo $username? $username : 'Anonimous'?>
                                     <small>Member since Sep. 2015</small>
                                 </p>
                             </li>
@@ -67,7 +71,7 @@
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="<? echo base_url().'auth/logout'?>" class="btn btn-default btn-flat">Выйти</a>
                                 </div>
                             </li>
                         </ul>
@@ -87,7 +91,7 @@
                          alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Bulat Khairullin</p>
+                    <p><? echo $username ? $username : 'Anonimous'?></p>
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>

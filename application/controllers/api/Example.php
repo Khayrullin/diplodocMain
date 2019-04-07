@@ -14,6 +14,16 @@ class Example extends REST_Controller {
     }
 
     public function user_get($id = 0) {
+
+        $user = array(
+            "id" => "1",
+            "first_name" => "First",
+            "insertion" => "",
+            "key" => "CODEX@123"
+        );
+
+        $this->session->userdata = $user;
+
         //returns all rows if the id parameter doesn't exist,
         //otherwise single row will be returned
         $users = $this->user->getRows($id);

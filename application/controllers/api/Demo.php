@@ -14,9 +14,6 @@ class Demo extends CI_Controller
         // API key
         $apiKey = 'CODEX@123';
 
-// API auth credentials
-        $apiUser = "admin";
-        $apiPass = "1234";
 
 // API URL
         $url = 'http://diplodoc.ru/api/authentication/registration/';
@@ -37,7 +34,6 @@ class Demo extends CI_Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-API-KEY: " . $apiKey));
-        curl_setopt($ch, CURLOPT_USERPWD, "$apiUser:$apiPass");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $userData);
 
@@ -105,8 +101,19 @@ class Demo extends CI_Controller
         $apiUser = "admin";
         $apiPass = "1234";
 
+
+        $user = array(
+            "id" => "1",
+            "first_name" => "First",
+            "insertion" => "",
+            "last_name" => "Last"
+        );
+
+        $this->session->userdata = $user;
+
+
 // Specify the ID of the user
-        $userID = 2;
+        $userID = 1;
 
 // API URL
         $url = 'http://diplodoc.ru/api/authentication/user/' . $userID;
@@ -118,7 +125,7 @@ class Demo extends CI_Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-API-KEY: " . $apiKey));
-        curl_setopt($ch, CURLOPT_USERPWD, "$apiUser:$apiPass");
+     //   curl_setopt($ch, CURLOPT_USERPWD, "$apiUser:$apiPass");
 
         $result = curl_exec($ch);
 
