@@ -39,7 +39,13 @@ class Project extends CI_Controller
             redirect('auth/login', 'refresh');
         } else {
 
-            $employer_id = "1";
+            $this->data['user'] = $this->ion_auth->user()->result();
+
+            $this->load->model('Employer_model');
+            $data['employer'] = $this->Employer_model->get_employer_by_user($this->data['user'][0]->id);
+
+
+            $employer_id =$data['employer'][0]['id'];
             $data['project'] = $this->Project_model->get_employers_projects($employer_id);
 
             $this->load->model('Manager_model');

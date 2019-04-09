@@ -18,6 +18,12 @@ class Employer_model extends CI_Model
     {
         return $this->db->get_where('employer',array('id'=>$id))->row_array();
     }
+
+    function get_employer_by_user($user_id)
+    {
+        $this->db->where('user_id',$user_id);
+        return $this->db->get('employer')->result_array();
+    }
         
     /*
      * Get all employer

@@ -12,6 +12,7 @@
                     <tr>
                         <th>Название проекта</th>
                         <th>Имя прораба</th>
+                        <th>Имя заказчика</th>
                         <th>Действия</th>
                     </tr>
                     <?php foreach ($project as $p) { ?>
@@ -20,6 +21,7 @@
                                 <a href="<?php echo site_url('project/get_detail/' . $p['id']); ?>">
                                     <?php echo $p['name']; ?></a>
                             </td>
+                            <td><?php echo $p['manager_id']; ?></td>
                             <td><?php echo $p['employer_id']; ?></td>
 
 
