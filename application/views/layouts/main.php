@@ -31,9 +31,9 @@
         <!-- Logo -->
         <a href="" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">diplodoc</span>
+            <span class="logo-mini">Dip</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">diplodoc</span>
+            <span class="logo-lg">Diplodoc Inc</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="pull-left info">
                     <p><? echo $username ? $username : 'Anonimous' ?></p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i> В сети</a>
                 </div>
             </div>
             <!-- sidebar menu: : style can be found in sidebar.less -->
