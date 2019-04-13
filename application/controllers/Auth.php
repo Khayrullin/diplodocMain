@@ -43,8 +43,9 @@ class Auth extends CI_Controller
 
             } else {
 
-                $group = 'workers';
+                $group = 'manager';
                 if ($this->ion_auth->in_group($group)) {
+                    return print("nfkf");
                     redirect('rest');
                 }
                 $group = 'employer';
