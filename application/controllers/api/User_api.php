@@ -6,6 +6,14 @@ class User_api extends API_Controller
     public function __construct()
     {
         parent::__construct();
+
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method == "OPTIONS") {
+            die();
+        }
     }
 
     /**
@@ -92,14 +100,18 @@ class User_api extends API_Controller
      */
     public function login()
     {
-        header("Access-Control-Allow-Origin: *");
         // API Configuration
         $this->_apiConfig([
             'methods' => ['POST'],
         ]);
 
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $email = $request->login;
+        $pass = $request->password;
 
-        if ($this->ion_auth->login($this->input->post('login'), $this->input->post('password'))) {
+
+        if ($this->ion_auth->login($email, $pass)) {
             $group = 'manager';
             if ($this->ion_auth->in_group($group)) {
 
