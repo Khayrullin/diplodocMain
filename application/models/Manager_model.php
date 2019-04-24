@@ -18,6 +18,14 @@ class Manager_model extends CI_Model
     {
         return $this->db->get_where('manager',array('id'=>$id))->row_array();
     }
+
+    /*
+     * Get manager by user_id
+     */
+    function get_manager_by_userId($id)
+    {
+        return $this->db->get_where('manager',array('user_id'=>$id))->row_array();
+    }
         
     /*
      * Get all manager

@@ -24,6 +24,12 @@ class Project_model extends CI_Model
         $this->db->where('employer_id',$id);
         return $this->db->get('project')->result_array();
     }
+
+    function get_managers_project($id)
+    {
+        $this->db->where('manager_id',$id);
+        return $this->db->get('project')->result_array();
+    }
         
     /*
      * Get all project

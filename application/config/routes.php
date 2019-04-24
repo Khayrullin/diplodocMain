@@ -16,4 +16,4 @@ $route['api/limit'] = 'api/user_api/api_limit';
 $route['api/key'] = 'api/user_api/api_key';
 $route['api/login'] = 'api/user_api/login';
 $route['api/test'] = 'api/user_api/view';
-$route['api/view'] = 'api/manager/view';
+$route['api/view'] = 'api/mobile_api/get_dashboard';

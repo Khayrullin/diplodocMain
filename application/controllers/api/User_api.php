@@ -91,7 +91,7 @@ class User_api extends API_Controller
             $this->api_return($data, '200');
         } else {
 
-            $this->api_return(['statu' => false, 'error' => 'Invalid Data'], '404');
+            $this->api_return(['status' => false, 'error' => 'Invalid Data'], '404');
         }
     }
 
@@ -104,84 +104,136 @@ class User_api extends API_Controller
         $this->_apiConfig([
             'methods' => ['POST'],
         ]);
+        $debug = true;
+        if ($debug) {
+            if ($this->ion_auth->login($this->input->post('login'), $this->input->post('password'))) {
 
-        $postdata = file_get_contents("php://input");
-        $request = json_decode($postdata);
-        $email = $request->login;
-        $pass = $request->password;
+                $group = 'manager';
+                if ($this->ion_auth->in_group($group)) {
 
+                    $user = $this->ion_auth->user()->result()[0];
+                    $payload = [
+                        'id' => $user->id,
+                        'other' => $user->email
+                    ];
 
-        if ($this->ion_auth->login($email, $pass)) {
-            $group = 'manager';
-            if ($this->ion_auth->in_group($group)) {
+                    $this->load->library('authorization_token');
 
-                $user =  $this->ion_auth->user()->result()[0];
-                $payload = [
-                    'id' => $user->id,
-                    'other' => $user->email
-                ];
-
-                $this->load->library('authorization_token');
-
-                $token = $this->authorization_token->generateToken($payload);
-                // return data
-                $this->api_return(
-                    [
-                        'status' => true,
-                        "result" => [
-                            'token' => $token,
+                    $token = $this->authorization_token->generateToken($payload);
+                    // return data
+                    $this->api_return(
+                        [
+                            'status' => true,
+                            "result" => [
+                                'token' => $token,
+                            ],
                         ],
-                    ],
-                    200);
+                        200);
+                } else {
+                    $this->ion_auth->logout();
+                    $this->api_return(
+                        [
+                            'status' => true,
+                            "result" => [
+                                'message' => 'Access Denied for non-workers',
+                            ],
+
+                        ],
+                        401);
+                }
             } else {
-                $this->ion_auth->logout();
                 $this->api_return(
                     [
                         'status' => true,
                         "result" => [
-                            'message' => 'Access Denied for non-workers',
+                            'message' => "Invalid Email or Password",
                         ],
 
                     ],
                     401);
             }
         } else {
-            $this->api_return(
-                [
-                    'status' => true,
-                    "result" => [
-                        'message' => $this->ion_auth->messages(),
+
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $email = $request->login;
+            $pass = $request->password;
+
+            if ($this->ion_auth->login($email, $pass)) {
+
+                $group = 'manager';
+                if ($this->ion_auth->in_group($group)) {
+
+                    $user = $this->ion_auth->user()->result()[0];
+                    $payload = [
+                        'id' => $user->id,
+                        'other' => $user->email
+                    ];
+
+                    $this->load->library('authorization_token');
+
+                    $token = $this->authorization_token->generateToken($payload);
+                    // return data
+                    $this->api_return(
+                        [
+                            'status' => true,
+                            "result" => [
+                                'token' => $token,
+                            ],
+                        ],
+                        200);
+                } else {
+                    $this->ion_auth->logout();
+                    $this->api_return(
+                        [
+                            'status' => true,
+                            "result" => [
+                                'message' => 'Access Denied for non-workers',
+                            ],
+
+                        ],
+                        401);
+                }
+            } else {
+                $this->api_return(
+                    [
+                        'status' => true,
+                        "result" => [
+                            'message' => "Invalid Email or Password",
+                        ],
+
                     ],
-
-                ],
-                401);
-        }
-
+                    401);
+            }
 
     }
 
-    /**
-     * View User Data
-     *
-     * @method POST
-     * @return Response|void
-     */
-    public function view()
-    {
-        header("Access-Control-Allow-Origin: *");
-        // API Configuration [Return Array: User Token Data]
-        $user_data = $this->_apiConfig([
-            'methods' => ['POST'],
-            'requireAuthorization' => true,
-        ]);
-        // return data
-        $this->api_return(
-            [
-                'status' => true,
-                "result" => [
-                    'user_data' => $user_data['token_data']
-                ],
+
+}
+
+/**
+ * View User Data
+ *
+ * @method POST
+ * @return Response|void
+ */
+public
+function view()
+{
+    header("Access-Control-Allow-Origin: *");
+    // API Configuration [Return Array: User Token Data]
+    $user_data = $this->_apiConfig([
+        'methods' => ['POST'],
+        'requireAuthorization' => true,
+    ]);
+    // return data
+    $this->api_return(
+        [
+            'status' => true,
+            "result" => [
+                'user_data' => $user_data['token_data']
             ],
-            200);
-    }
+        ],
+        200);
+}
 }
