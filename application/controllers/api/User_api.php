@@ -104,7 +104,7 @@ class User_api extends API_Controller
         $this->_apiConfig([
             'methods' => ['POST'],
         ]);
-        $debug = true;
+        $debug = false;
         if ($debug) {
             if ($this->ion_auth->login($this->input->post('login'), $this->input->post('password'))) {
 

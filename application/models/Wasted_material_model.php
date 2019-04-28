@@ -27,6 +27,12 @@ class Wasted_material_model extends CI_Model
         $this->db->order_by('id', 'desc');
         return $this->db->get('wasted_materials')->result_array();
     }
+
+    function get_reports_wMaterials($report_id)
+    {
+        $this->db->where('report_id', $report_id);
+        return $this->db->get('wasted_materials')->result_array();
+    }
         
     /*
      * function to add new wasted_material
