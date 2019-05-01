@@ -60,6 +60,7 @@ class Mobile_api extends API_Controller
             }
             $i++;
         }
+        $data['task'][0]['all_workers'] = $this->Workman_model->get_all_workman();
 
 
         $out = array_values($data['task']);
@@ -88,23 +89,34 @@ class Mobile_api extends API_Controller
             'requireAuthorization' => true,
         ]);
 
-        $this->load->model('Manager_model');
-        $managerId = $this->Manager_model->get_manager_by_userId($user_data['token_data']['id'])['id'];
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
 
-        $this->load->model('Project_model');
-        $projectId = $this->Project_model->get_managers_project($managerId);
+        $params = array(
+            'task_id' => $request->task_id,
+            'workman_id' => $request->workman_id,
+            'amount' => $request->amount,
+            'type_of_work' => $request->type_of_work,
+            'work_hours' => $request->work_hours,
+            'sendtime' => date("Y-m-d H:i:s"),
+            'documents' => $request->documents,
+            'materials' => $request->materials,
+        );
+        $this->load->model('Report_model');
 
-        $this->load->model('Task_model');
-        $data['task'] = $this->Task_model->get_projects_task($projectId[0]['id']);
-        $out = array_values($data['task']);
-        json_encode($out);
-        // return data
+      //  $report_id = $this->Report_model->add_report($params);
+
+
         $this->api_return(
             [
                 'status' => true,
-                "result" => $out
+                "result" => [
+                    'message' => $params,
+                ],
 
             ],
             200);
+
+
     }
 }
