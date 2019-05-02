@@ -51,6 +51,9 @@ class Project extends CI_Controller
             $this->load->model('Manager_model');
             $data['manager'] = $this->Manager_model->get_all_manager();
 
+            $this->load->model('ion_auth_model');
+            $data['users'] = $this->ion_auth_model->getUsers();
+
 
             $data['_view'] = 'project/employers_projects';
             $this->load->view('layouts/main', $data);

@@ -37,6 +37,7 @@ class Task extends CI_Controller
             $data['task'] = $this->Task_model->get_task($id);
             $this->load->model('Status_model');
             $data['status'] = $this->Status_model->get_status($data['task']["status_id"]);
+            $data['statuses'] = $this->Status_model->get_all_status();
             $this->load->model('Project_model');
             $data['project'] = $this->Project_model->get_project($data['task']["project_id"]);
 

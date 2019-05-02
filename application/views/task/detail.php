@@ -76,6 +76,7 @@
                         <th>Имя рабочего</th>
                         <th>Время работы</th>
                         <th>Дата отправки</th>
+                        <th>Статус</th>
                         <th>Документы</th>
                     </tr>
                     <?php foreach ($report as $r) { ?>
@@ -118,6 +119,13 @@
 
                             <td><?php echo $r['work_hours']; ?></td>
                             <td><?php echo $r['sendtime']; ?></td>
+                            <td><?php
+                                foreach ($statuses as $s) {
+                                    if ($s['id'] == $r['status_id']) {
+                                        echo $s['name'];
+                                    }
+                                }
+                                ?></td>
                             <td><a href="<?php echo site_url('document/get_documents/' . $r['id']); ?>"
                                    class="btn btn-info btn-xs" style="background-color: #17a51b; border-color: #158416">Файлы </a>
                             </td>

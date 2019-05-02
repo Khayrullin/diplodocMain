@@ -1391,6 +1391,15 @@ class Ion_auth_model extends CI_Model
 
         return $this;
     }
+    /**
+     * all users
+     *
+     */
+    public function getUsers()
+    {
+        $this->db->order_by('id', 'desc');
+        return $this->db->get('users')->result_array();
+    }
 
     /**
      * user
@@ -1415,6 +1424,8 @@ class Ion_auth_model extends CI_Model
 
         return $this;
     }
+
+
 
     /**
      * get_users_groups

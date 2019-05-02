@@ -22,8 +22,12 @@
                             <td><?php
                                 foreach ($manager as $m) {
                                     if ($p['manager_id'] == $m['id']) {
-                                        //TODO Нормальный вывод имени юзера
-                                        echo '***TODO***' ;
+                                        foreach ($users as $prorab) {
+                                            if ($m['user_id'] == $prorab['id']) {
+                                                echo $prorab['first_name']." ". $prorab['last_name'];
+                                            }
+                                        }
+
                                     }
                                 }
                                 ?>

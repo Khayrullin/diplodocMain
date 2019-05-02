@@ -49,13 +49,16 @@ class Mobile_api extends API_Controller
         $this->load->model('Report_model');
         $this->load->model('Wasted_material_model');
         $this->load->model('Workman_model');
+        $this->load->model('Status_model');
         $i = 0;
         foreach ($data['task'] as $t) {
             $data['task'][$i]['reports'] = $this->Report_model->get_task_reports($t['id']);
+            $data['task'][$i]['status'] = $this->Status_model->get_status($t['id']);
             $j = 0;
             foreach ($data['task'][$i]['reports'] as $r) {
                 $data['task'][$i]['reports'][$j]['wmaterials'] = $this->Wasted_material_model->get_reports_wMaterials($r['id']);
                 $data['task'][$i]['reports'][$j]['workman_id'] = $this->Workman_model->get_workman($data['task'][$i]['reports'][$j]['workman_id']);
+                $data['task'][$i]['reports'][$j]['status'] = $this->Status_model->get_status($data['task'][$i]['reports'][$j]['status_id']);
                 $j++;
             }
             $i++;
