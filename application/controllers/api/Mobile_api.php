@@ -102,19 +102,29 @@ class Mobile_api extends API_Controller
             'type_of_work' => $request->type_of_work,
             'work_hours' => $request->work_hours,
             'sendtime' => date("Y-m-d H:i:s"),
-            'documents' => $request->documents,
-            'materials' => $request->materials,
+            'status_id' => 3,
+//          'documents' => $request->documents,
         );
         $this->load->model('Report_model');
+        $report_id = $this->Report_model->add_report($params);
+        $this->load->model('Wasted_material_model');
+        $this->load->model('Document_model');
 
-      //  $report_id = $this->Report_model->add_report($params);
+        foreach ($request->materials as $wmaterial) {
+            $params = array(
+                'material_id' => $wmaterial->id,
+                'report_id' => $report_id,
+                'amount' => $wmaterial->wasted
+            );
+            $this->Wasted_material_model->add_wasted_material($params);
+        }
 
 
         $this->api_return(
             [
                 'status' => true,
                 "result" => [
-                    'message' => $params,
+                    'message' => $report_id,
                 ],
 
             ],

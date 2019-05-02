@@ -37,6 +37,8 @@ class Report_model extends CI_Model
         return $this->db->insert_id();
     }
 
+
+
     /*
      * function to update report
      */
