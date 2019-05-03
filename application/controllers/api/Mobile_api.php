@@ -95,6 +95,13 @@ class Mobile_api extends API_Controller
         $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 
+
+        $this->load->model('Wasted_material_model');
+        $this->load->model('Document_model');
+        $this->load->model('Material_model');
+        $this->load->model('Workman_model');
+        $this->load->model('Report_model');
+
         $params = array(
             'task_id' => $request->task_id,
             'workman_id' => $request->workman_id,
@@ -105,27 +112,42 @@ class Mobile_api extends API_Controller
             'status_id' => 3,
 //          'documents' => $request->documents,
         );
-        $this->load->model('Report_model');
+
         $report_id = $this->Report_model->add_report($params);
-        $this->load->model('Wasted_material_model');
-        $this->load->model('Document_model');
+
 
         foreach ($request->materials as $wmaterial) {
-            $params = array(
-                'material_id' => $wmaterial->id,
-                'report_id' => $report_id,
-                'amount' => $wmaterial->wasted
-            );
-            $this->Wasted_material_model->add_wasted_material($params);
-        }
-        // TODO: изменения в обычные материалы количества
+            if ($wmaterial->wasted != 0) {
+                $params = array(
+                    'material_id' => $wmaterial->id,
+                    'report_id' => $report_id,
+                    'amount' => $wmaterial->wasted
+                );
+                $this->Wasted_material_model->add_wasted_material($params);
 
+
+                $data['material'] = $this->Material_model->get_material(intval($wmaterial->id));
+
+
+                $params = array(
+                    'quantity_left' => intval($data['material']['quantity_left']) - intval($wmaterial->wasted)
+                );
+                $this->Material_model->update_material($wmaterial->id, $params);
+            }
+
+        }
+
+        $data['workman'] = $this->Workman_model->get_workman($request->workman_id);
+        $params = array(
+            'unpaid_hours' => intval($data['workman']['unpaid_hours']) + intval($request->work_hours)
+        );
+        $this->Workman_model->update_workman($request->workman_id, $params);
 
         $this->api_return(
             [
                 'status' => true,
                 "result" => [
-                    'message' => $report_id,
+                    'message' => "h",
                 ],
 
             ],
