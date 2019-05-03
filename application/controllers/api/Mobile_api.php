@@ -118,6 +118,7 @@ class Mobile_api extends API_Controller
             );
             $this->Wasted_material_model->add_wasted_material($params);
         }
+        // TODO: изменения в обычные материалы количества
 
 
         $this->api_return(

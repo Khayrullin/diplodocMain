@@ -78,6 +78,7 @@
                         <th>Дата отправки</th>
                         <th>Статус</th>
                         <th>Документы</th>
+                        <th>Действия</th>
                     </tr>
                     <?php foreach ($report as $r) { ?>
                         <tr>
@@ -128,6 +129,9 @@
                                 ?></td>
                             <td><a href="<?php echo site_url('document/get_documents/' . $r['id']); ?>"
                                    class="btn btn-info btn-xs" style="background-color: #17a51b; border-color: #158416">Файлы </a>
+                            </td>
+                            <td>
+                                <a href="<?php echo site_url('report/edit_by_user/'.$r['id']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Изменить статус</a>
                             </td>
                         </tr>
                     <?php } ?>

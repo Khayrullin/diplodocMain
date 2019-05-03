@@ -68,7 +68,7 @@ class Report extends CI_Controller
      */
     function edit($id)
     {
-        if (!$this->ion_auth->is_admin()) {
+        if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
             redirect('/', 'refresh');
         } else {
@@ -85,6 +85,7 @@ class Report extends CI_Controller
                         'type_of_work' => $this->input->post('type_of_work'),
                         'work_hours' => $this->input->post('work_hours'),
                         'sendtime' => date("Y-m-d H:i:s"),
+                        'status_id' => $this->input->post('status_id'),
                     );
 
                     $this->Report_model->update_report($id, $params);
@@ -92,6 +93,51 @@ class Report extends CI_Controller
                 } else {
                     $this->load->model('Task_model');
                     $data['all_task'] = $this->Task_model->get_all_task();
+
+                    $this->load->model('Status_model');
+                    $data['all_status'] = $this->Status_model->get_all_status();
+
+
+                    $this->load->model('Workman_model');
+                    $data['all_workman'] = $this->Workman_model->get_all_workman();
+
+                    $data['_view'] = 'report/edit';
+                    $this->load->view('layouts/main', $data);
+                }
+            } else {
+                show_error('The report you are trying to edit does not exist.');
+            }
+        }
+    }
+
+    /*
+   * Editing a report
+   */
+    function edit_by_user($id)
+    {
+        if (!$this->ion_auth->logged_in()) {
+            // redirect them to the login page
+            redirect('/', 'refresh');
+        } else {
+
+            // check if the report exists before trying to edit it
+            $data['report'] = $this->Report_model->get_report($id);
+
+            if (isset($data['report']['id'])) {
+                if (isset($_POST) && count($_POST) > 0) {
+                    $params = array(
+                        'status_id' => $this->input->post('status_id'),
+                    );
+
+                    $this->Report_model->update_report($id, $params);
+                    redirect('task/get_detail/' . $data['report']['task_id']);
+                } else {
+                    $this->load->model('Task_model');
+                    $data['all_task'] = $this->Task_model->get_all_task();
+
+                    $this->load->model('Status_model');
+                    $data['all_status'] = $this->Status_model->get_all_status();
+
 
                     $this->load->model('Workman_model');
                     $data['all_workman'] = $this->Workman_model->get_all_workman();
