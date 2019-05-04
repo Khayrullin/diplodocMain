@@ -94,6 +94,7 @@ class Mobile_api extends API_Controller
 
         $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
+        $documents = '';
 
 
         $this->load->model('Wasted_material_model');
@@ -102,57 +103,72 @@ class Mobile_api extends API_Controller
         $this->load->model('Workman_model');
         $this->load->model('Report_model');
 
-        $params = array(
-            'task_id' => $request->task_id,
-            'workman_id' => $request->workman_id,
-            'amount' => $request->amount,
-            'type_of_work' => $request->type_of_work,
-            'work_hours' => $request->work_hours,
-            'sendtime' => date("Y-m-d H:i:s"),
-            'status_id' => 3,
-//          'documents' => $request->documents,
-        );
-
-        $report_id = $this->Report_model->add_report($params);
 
 
-        foreach ($request->materials as $wmaterial) {
-            if ($wmaterial->wasted != 0) {
+
+
+
+        foreach ($request->data as $report) {
+            $rep = $report;
+            $params = array(
+                'task_id' => $rep->task_id,
+                'workman_id' => $rep->workman_id,
+                'amount' => $rep->amount,
+                'type_of_work' => $rep->type_of_work,
+                'work_hours' => $rep->work_hours,
+                'sendtime' => date("Y-m-d H:i:s"),
+                'status_id' => 3,
+            );
+
+            $report_id = $this->Report_model->add_report($params);
+
+            foreach ($rep->documents as $doc) {
                 $params = array(
-                    'material_id' => $wmaterial->id,
                     'report_id' => $report_id,
-                    'amount' => $wmaterial->wasted
+                    'name' => $doc->name,
+                    'data' => $doc->photo,
                 );
-                $this->Wasted_material_model->add_wasted_material($params);
-
-
-                $data['material'] = $this->Material_model->get_material(intval($wmaterial->id));
-
-
-                $params = array(
-                    'quantity_left' => intval($data['material']['quantity_left']) - intval($wmaterial->wasted)
-                );
-                $this->Material_model->update_material($wmaterial->id, $params);
+                $this->Document_model->add_document($params);
             }
+
+            foreach ($rep->materials as $wmaterial) {
+                if ($wmaterial->wasted != 0) {
+                    $params = array(
+                        'material_id' => $wmaterial->id,
+                        'report_id' => $report_id,
+                        'amount' => $wmaterial->wasted
+                    );
+                    $this->Wasted_material_model->add_wasted_material($params);
+
+
+                    $data['material'] = $this->Material_model->get_material(intval($wmaterial->id));
+
+
+                    $params = array(
+                        'quantity_left' => intval($data['material']['quantity_left']) - intval($wmaterial->wasted)
+                    );
+                    $this->Material_model->update_material($wmaterial->id, $params);
+                }
+
+            }
+
+            $data['workman'] = $this->Workman_model->get_workman($rep->workman_id);
+            $params = array(
+                'unpaid_hours' => intval($data['workman']['unpaid_hours']) + intval($rep->work_hours)
+            );
+            $this->Workman_model->update_workman($rep->workman_id, $params);
 
         }
 
-        $data['workman'] = $this->Workman_model->get_workman($request->workman_id);
-        $params = array(
-            'unpaid_hours' => intval($data['workman']['unpaid_hours']) + intval($request->work_hours)
-        );
-        $this->Workman_model->update_workman($request->workman_id, $params);
 
         $this->api_return(
             [
                 'status' => true,
                 "result" => [
-                    'message' => "h",
+                    'message' => $documents,
                 ],
 
             ],
             200);
-
-
     }
 }
