@@ -7,22 +7,13 @@
             <div class="box-body">
                 <table class="table table-striped">
                     <tr>
-						<th>ID</th>
-						<th>Report Id</th>
-						<th>Name</th>
-						<th>Data</th>
-						<th>Actions</th>
+						<th>Имя файла</th>
+						<th>Файл</th>
                     </tr>
                     <?php foreach($documents as $d){ ?>
                     <tr>
-						<td><?php echo $d['id']; ?></td>
-						<td><?php echo $d['report_id']; ?></td>
 						<td><?php echo $d['name']; ?></td>
-						<td><?php echo $d['data']; ?></td>
-						<td>
-                            <a href="<?php echo site_url('document/edit/'.$d['id']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 
-                            <a href="<?php echo site_url('document/remove/'.$d['id']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
-                        </td>
+                        <td> <img src="<?php echo $d['data']?>" /> </td>
                     </tr>
                     <?php } ?>
                 </table>
