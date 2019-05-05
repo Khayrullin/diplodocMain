@@ -50,6 +50,7 @@ class Mobile_api extends API_Controller
         $this->load->model('Wasted_material_model');
         $this->load->model('Workman_model');
         $this->load->model('Status_model');
+        $this->load->model('Document_model');
         $i = 0;
         foreach ($data['task'] as $t) {
             $data['task'][$i]['reports'] = $this->Report_model->get_task_reports($t['id']);
@@ -59,6 +60,7 @@ class Mobile_api extends API_Controller
                 $data['task'][$i]['reports'][$j]['wmaterials'] = $this->Wasted_material_model->get_reports_wMaterials($r['id']);
                 $data['task'][$i]['reports'][$j]['workman_id'] = $this->Workman_model->get_workman($data['task'][$i]['reports'][$j]['workman_id']);
                 $data['task'][$i]['reports'][$j]['status'] = $this->Status_model->get_status($data['task'][$i]['reports'][$j]['status_id']);
+                $data['task'][$i]['reports'][$j]['documents'] = $this->Document_model->get_documents($r['id']);
                 $j++;
             }
             $i++;
@@ -104,10 +106,6 @@ class Mobile_api extends API_Controller
         $this->load->model('Report_model');
 
 
-
-
-
-
         foreach ($request->data as $report) {
             $rep = $report;
             $params = array(
@@ -122,34 +120,38 @@ class Mobile_api extends API_Controller
 
             $report_id = $this->Report_model->add_report($params);
 
-            foreach ($rep->documents as $doc) {
-                $params = array(
-                    'report_id' => $report_id,
-                    'name' => $doc->name,
-                    'data' => $doc->photo,
-                );
-                $this->Document_model->add_document($params);
-            }
 
-            foreach ($rep->materials as $wmaterial) {
-                if ($wmaterial->wasted != 0) {
+            if (isset($rep->documents)) {
+                foreach ($rep->documents as $doc) {
                     $params = array(
-                        'material_id' => $wmaterial->id,
                         'report_id' => $report_id,
-                        'amount' => $wmaterial->wasted
+                        'name' => $doc->name,
+                        'data' => $doc->photo,
                     );
-                    $this->Wasted_material_model->add_wasted_material($params);
-
-
-                    $data['material'] = $this->Material_model->get_material(intval($wmaterial->id));
-
-
-                    $params = array(
-                        'quantity_left' => intval($data['material']['quantity_left']) - intval($wmaterial->wasted)
-                    );
-                    $this->Material_model->update_material($wmaterial->id, $params);
+                    $this->Document_model->add_document($params);
                 }
+            }
+            if (isset($rep->materials)) {
+                foreach ($rep->materials as $wmaterial) {
+                    if ($wmaterial->wasted != 0) {
+                        $params = array(
+                            'material_id' => $wmaterial->id,
+                            'report_id' => $report_id,
+                            'amount' => $wmaterial->wasted
+                        );
+                        $this->Wasted_material_model->add_wasted_material($params);
 
+
+                        $data['material'] = $this->Material_model->get_material(intval($wmaterial->id));
+
+
+                        $params = array(
+                            'quantity_left' => intval($data['material']['quantity_left']) - intval($wmaterial->wasted)
+                        );
+                        $this->Material_model->update_material($wmaterial->id, $params);
+                    }
+
+                }
             }
 
             $data['workman'] = $this->Workman_model->get_workman($rep->workman_id);
@@ -165,7 +167,7 @@ class Mobile_api extends API_Controller
             [
                 'status' => true,
                 "result" => [
-                    'message' => $documents,
+                    'message' => 'Saved Successfully',
                 ],
 
             ],
