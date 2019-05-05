@@ -24,13 +24,14 @@ class Material_model extends CI_Model
      */
     function get_all_materials()
     {
-        $this->db->order_by('id', 'desc');
+        $this->db->order_by('id', 'asc');
         return $this->db->get('materials')->result_array();
     }
 
     function get_tasks_materials($task_id)
     {
         $this->db->where('task_id',$task_id);
+        $this->db->order_by('id', 'asc');
         return $this->db->get('materials')->result_array();
     }
 
