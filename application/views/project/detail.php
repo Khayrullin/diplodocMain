@@ -12,28 +12,67 @@
                         <th>Дедлайн</th>
                         <th>Текущий статус</th>
                     </tr>
-                    <?php foreach ($task as $T) { ?>
-                        <tr>
-                            <td>
+                    <?php foreach ($task as $T) {
+                        if (strtotime($T['deadline']) > strtotime('today')) { ?>
+                            <tr>
+                                <td>
 
-                                <a href="<?php echo site_url('task/get_detail/' . $T['id']); ?>">
-                                    <?php echo $T['name']; ?></a>
+                                    <a href="<?php echo site_url('task/get_detail/' . $T['id']); ?>">
+                                        <?php echo $T['name']; ?></a>
 
-                            </td>
-                            <td><?php echo $T['deadline']; ?></td>
-                            <td><?php
-                                foreach ($status as $s) {
-                                    if ($T['status_id'] == $s['id']) {
-                                        echo $s['name'];
+                                </td>
+                                <td><?php echo $T['deadline']; ?></td>
+                                <td><?php
+                                    foreach ($status as $s) {
+                                        if ($T['status_id'] == $s['id']) {
+                                            echo $s['name'];
+                                        }
                                     }
-                                }
-                                ?>
+                                    ?>
 
-                            </td>
-                        </tr>
-                    <?php } ?>
+                                </td>
+                            </tr>
+                        <?php }
+                    } ?>
                 </table>
+            </div>
 
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Просроченные задачи </h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Задача</th>
+                            <th>Дедлайн</th>
+                            <th>Текущий статус</th>
+                        </tr>
+                        <?php foreach ($task as $T) {
+                            if (strtotime($T['deadline']) < strtotime('today')) { ?>
+                                <tr>
+                                    <td>
+
+                                        <a href="<?php echo site_url('task/get_detail/' . $T['id']); ?>">
+                                            <?php echo $T['name']; ?></a>
+
+                                    </td>
+                                    <td><?php echo $T['deadline']; ?></td>
+                                    <td><?php
+                                        foreach ($status as $s) {
+                                            if ($T['status_id'] == $s['id']) {
+                                                echo $s['name'];
+                                            }
+                                        }
+                                        ?>
+
+                                    </td>
+                                </tr>
+                            <?php }
+                        } ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
