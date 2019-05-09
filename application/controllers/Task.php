@@ -99,6 +99,68 @@ class Task extends CI_Controller
     }
 
     /*
+     * Adding a new task
+     */
+    function import($id)
+    {
+        if (!$this->ion_auth->logged_in()) {
+            // redirect them to the login page
+            redirect('/', 'refresh');
+        } else {
+            {
+                if (isset($_FILES["csv"])) {
+
+                    //if there was an error uploading the file
+                    if ($_FILES["csv"]["error"] > 0) {
+                        echo "Return Code: " . $_FILES["csv"]["error"] . "<br />";
+
+                    } else {
+                        $prevTask = 0;
+                        if (($h = fopen($_FILES["csv"]["tmp_name"], "r")) !== false) {
+                            $this->load->model('Material_model');
+                            // Convert each line into the local $data variable
+                            while (($data = fgetcsv($h, 1000, ",")) !== false) {
+
+                                if (strpos($data[1], 'абота') !== false) {
+                                    $params = array(
+                                        'project_id' => $id,
+                                        'status_id' => 2,
+                                        'quantity' => $data[4],
+                                        'unit' => $data[3],
+                                        'name' => $data[2],
+                                        'description' => $data[2],
+                                        'deadline' => date("Y-m-d h:i:s", time() + 604800),
+                                        'quantity_done' => 0,
+                                        'quantity_left' => $data[4],
+                                    );
+
+                                    $prevTask = $this->Task_model->add_task($params);
+                                } else if (strpos($data[1], 'атериал') !== false) {
+                                    $params = array(
+                                        'task_id' => $prevTask,
+                                        'name' => $data[2],
+                                        'unit' => $data[3],
+                                        'quantity' => $data[4],
+                                        'quantity_left' => $data[4],
+                                    );
+                                    $this->Material_model->add_material($params);
+                                }
+                            }
+
+                            // Close the file
+                            fclose($h);
+
+                            redirect('project/get_detail/'.$id);
+                        }
+                    }
+                } else {
+                    echo "No file selected <br />";
+                }
+            }
+        }
+    }
+
+    /*
      * Editing a task
      */
 

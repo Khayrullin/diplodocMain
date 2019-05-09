@@ -54,7 +54,7 @@ class Mobile_api extends API_Controller
         $i = 0;
         foreach ($data['task'] as $t) {
             $data['task'][$i]['reports'] = $this->Report_model->get_task_reports($t['id']);
-            $data['task'][$i]['status'] = $this->Status_model->get_status($t['id']);
+            $data['task'][$i]['status'] = $this->Status_model->get_status($t['status_id']);
             $j = 0;
             foreach ($data['task'][$i]['reports'] as $r) {
                 $data['task'][$i]['reports'][$j]['wmaterials'] = $this->Wasted_material_model->get_reports_wMaterials($r['id']);

@@ -3,6 +3,13 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $project['name'] . "s tasks"; ?> </h3>
+                <div class="box-tool" style="position: relative; float: right; width: 60%">
+                    <a href="#" style="background-color: #1dad3b; color: white; float: right" class="btn btn-sm">Экспорт</a>
+                    <form style="float: right; width: 300px; height: 40px" action="<?php echo site_url('task/import/'. $project['id']); ?>" method="post" enctype="multipart/form-data">
+                        <input style="width: 250px; margin-top: 4px;" type="file" name="csv" value=""/>
+                        <input type="submit" style="position: absolute; margin-top: -26px; margin-left: 230px; background-color: #0f8adf; color: white" class="btn btn-sm" name="submit" value="Импорт"/></form>
+                </div>
+
             </div>
             <div class="box-body">
 
