@@ -99,7 +99,7 @@ class Task extends CI_Controller
     }
 
     /*
-     * Adding a new task
+     * Importing a bunch of tasks
      */
     function import($id)
     {
@@ -135,22 +135,24 @@ class Task extends CI_Controller
                                     );
 
                                     $prevTask = $this->Task_model->add_task($params);
-                                } else if (strpos($data[1], 'атериал') !== false) {
-                                    $params = array(
-                                        'task_id' => $prevTask,
-                                        'name' => $data[2],
-                                        'unit' => $data[3],
-                                        'quantity' => $data[4],
-                                        'quantity_left' => $data[4],
-                                    );
-                                    $this->Material_model->add_material($params);
+                                } else {
+                                    if (strpos($data[1], 'атериал') !== false) {
+                                        $params = array(
+                                            'task_id' => $prevTask,
+                                            'name' => $data[2],
+                                            'unit' => $data[3],
+                                            'quantity' => $data[4],
+                                            'quantity_left' => $data[4],
+                                        );
+                                        $this->Material_model->add_material($params);
+                                    }
                                 }
                             }
 
                             // Close the file
                             fclose($h);
 
-                            redirect('project/get_detail/'.$id);
+                            redirect('project/get_detail/' . $id);
                         }
                     }
                 } else {
@@ -159,6 +161,50 @@ class Task extends CI_Controller
             }
         }
     }
+
+    /*
+     * Importing a bunch of tasks
+     */
+    function export($id)
+    {
+        if (!$this->ion_auth->logged_in()) {
+            // redirect them to the login page
+            redirect('/', 'refresh');
+        } else {
+            {
+                $data = array(array('код задачи', 'код материала', 'количество'));
+                $this->load->model('Wasted_material_model');
+                $this->load->model('Report_model');
+                $tasks = $this->Task_model->get_projects_task($id);
+                foreach ($tasks as $task) {
+                    $reports = $this->Report_model->get_task_reports($task['id']);
+                    foreach ($reports as $report) {
+                        $wmaterials = $this->Wasted_material_model->get_reports_wMaterials($report['id']);
+                        foreach ($wmaterials as $wm) {
+
+                            array_push($data, array($id, $wm['material_id'], $wm['amount']));
+
+                        }
+
+                    }
+                }
+                $filename = "data_export_" . date("Y-m-d") . ".csv";
+
+                header('Content-Type: application/csv; charset=UTF-8');
+
+                header("Content-Disposition: attachment;filename={$filename}");
+                $f = fopen('php://output', 'w');
+
+                foreach ($data as $fields) {
+                    fputcsv($f, $fields);
+                }
+                fclose($f);
+
+
+            }
+        }
+    }
+
 
     /*
      * Editing a task
